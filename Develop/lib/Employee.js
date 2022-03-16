@@ -1,5 +1,3 @@
-// Parent class for Manager, Engineer, and Intern sub classes
-
 class Employee {
 
   constructor(name, id, email) {

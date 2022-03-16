@@ -11,22 +11,14 @@ const distPath = path.join(DIST_DIR, 'team.html');
 const render = require('./src/page-template.js');
 
 const teamMembers = [];
-// Create an id array to store the ids.
-// This array will be used to check the potential duplicate id newly entered by user
+
 const idArray = [];
 
-// Inform user of usage
 console.log(
   '\nWelcome to the team generator!\nUse `npm run reset` to reset the dist/ folder\n'
 );
 
 function appMenu() {
-  // Create manager first, then the manager will create a team
-  // Once manager is created, we will create team by asking the user which type of employee to create
-  // Based on the choice, we will create that employee object
-  // Loop through the create team function until user is done from creating employees for the team
-  // then we will use the employee objects created to render html for the team
-
   function createManager() {
     console.log('Please build your team 👥');
     inquirer
@@ -75,11 +67,6 @@ function appMenu() {
             return true;
           },
         },
-        //
-        // TODO: YOUR CODE HERE: // DONE
-        // CREATE REST OF QUESTIONS HERE FOR MANAGER
-        // Strongly recommend to add validate property function for id and email
-        //
       ])
       .then((answers) => {
         const manager = new Manager(
@@ -160,7 +147,7 @@ function appMenu() {
         },
         {
           type: 'input',
-          name: 'engineerGitHub',
+          name: 'engineerGithub',
           message: "What is the team engineer's GitHub username?",
           validate: (answer) => {
             if (answer !== '') {
@@ -169,17 +156,13 @@ function appMenu() {
             return 'Please enter GitHub username.';
           },
         },
-        //
-        // TODO: YOUR CODE HERE
-        // CREATE OBJECTS OF QUESTIONS FOR ENGINEER
-        //
       ])
       .then((answers) => {
         const engineer = new Engineer(
           answers.engineerName,
           answers.engineerId,
           answers.engineerEmail,
-          answers.engineerOfficeNumber
+          answers.engineerGithub
         );
         teamMembers.push(engineer);
         idArray.push(answers.engineerId);
@@ -234,10 +217,6 @@ function appMenu() {
           return 'Please enter school.';
         },
       },
-      //
-      // TODO: YOUR CODE HERE
-      // CREATE OBJECTS OF QUESTIONS FOR INTERN
-      //
     ])
     .then((answers) => {
       const intern = new Intern(
@@ -253,7 +232,6 @@ function appMenu() {
   }
 
   function buildTeam() {
-    // Create the output directory if the dist path doesn't exist
     if (!fs.existsSync(DIST_DIR)) {
       fs.mkdirSync(DIST_DIR);
     }
